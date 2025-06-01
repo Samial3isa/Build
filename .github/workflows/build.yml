@@ -18,12 +18,16 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install dependencies (Python + Buildozer + AIDL)
       run: |
         sudo apt update
-        sudo apt install -y git zip unzip openjdk-17-jdk python3-pip python3-setuptools python3-dev build-essential
+        sudo apt install -y git zip unzip openjdk-17-jdk python3-pip python3-setuptools python3-dev build-essential aidl
         pip install --upgrade pip
         pip install cython virtualenv buildozer
+
+    - name: Initialize buildozer (if needed)
+      run: |
+        if [ ! -f buildozer.spec ]; then buildozer init; fi
 
     - name: Build APK
       run: |
